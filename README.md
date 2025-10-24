@@ -50,7 +50,7 @@ The bot supports both text commands (with prefix `!`) and slash commands (with p
 
 ### Prerequisites
 
-- Go 1.21 or later
+- Go 1.24 or later
 - Discord Bot Token
 - Bot must be added to your Discord server with `application.commands` scope
 
