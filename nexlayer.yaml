@@ -3,6 +3,7 @@ application:
   pods:
     - name: "bot"
       image: "registry.nexlayer.io/nexlayer-mcp/9f1fd4c7-dc10-4532-8a44-b87cc8f94b7f/leetbot-aeb2df86-leetbot:50e99a22-1761322530"
+      path: "/"
       servicePorts: [8080]
       vars:
         DISCORD_TOKEN: "your_discord_bot_token_here"
