@@ -132,7 +132,6 @@ func TestGetAvailableCompanies(t *testing.T) {
 		t.Errorf("GetAvailableCompanies() count = %d, want 3", len(companies))
 	}
 
-	// verify companies are sorted
 	if len(companies) >= 3 {
 		if companies[0] != "airbnb" || companies[1] != "amazon" || companies[2] != "google" {
 			t.Errorf("GetAvailableCompanies() not sorted correctly: %v", companies)
@@ -156,14 +155,12 @@ func TestGetAvailableTimeframes(t *testing.T) {
 		t.Errorf("GetAvailableTimeframes() count = %d, want 3", len(timeframes))
 	}
 
-	// verify timeframes are sorted
 	if len(timeframes) >= 3 {
 		if timeframes[0] != "all" || timeframes[1] != "thirty-days" || timeframes[2] != "three-months" {
 			t.Errorf("GetAvailableTimeframes() not sorted correctly: %v", timeframes)
 		}
 	}
 
-	// test nonexistent company
 	timeframes = pbc.GetAvailableTimeframes("nonexistent")
 	if timeframes != nil {
 		t.Errorf("GetAvailableTimeframes() for nonexistent company = %v, want nil", timeframes)
@@ -281,7 +278,6 @@ func TestNormalizeTimeframe(t *testing.T) {
 		input    string
 		expected string
 	}{
-		// thirty-days aliases
 		{"30", "thirty-days"},
 		{"30d", "thirty-days"},
 		{"30days", "thirty-days"},
@@ -291,7 +287,6 @@ func TestNormalizeTimeframe(t *testing.T) {
 		{"thirty-days", "thirty-days"},
 		{"  30d  ", "thirty-days"},
 
-		// three-months aliases
 		{"90", "three-months"},
 		{"90d", "three-months"},
 		{"3mo", "three-months"},
@@ -303,7 +298,6 @@ func TestNormalizeTimeframe(t *testing.T) {
 		{"3months", "three-months"},
 		{"3-months", "three-months"},
 
-		// six-months aliases
 		{"180", "six-months"},
 		{"6mo", "six-months"},
 		{"180days", "six-months"},
@@ -314,26 +308,22 @@ func TestNormalizeTimeframe(t *testing.T) {
 		{"6months", "six-months"},
 		{"6-months", "six-months"},
 
-		// all aliases
 		{"all", "all"},
 		{"alltime", "all"},
 		{"all-time", "all"},
 		{"everything", "all"},
 		{"", "all"},
 
-		// more-than-six-months aliases
 		{"more-than-six-months", "more-than-six-months"},
 		{"morethan6months", "more-than-six-months"},
 		{"more-than-6-months", "more-than-six-months"},
 		{">6mo", "more-than-six-months"},
 		{">6months", "more-than-six-months"},
 
-		// case insensitivity
 		{"ALL", "all"},
 		{"Thirty-Days", "thirty-days"},
 		{"THREE-MONTHS", "three-months"},
 
-		// invalid inputs default to all
 		{"invalid", "all"},
 		{"random", "all"},
 		{"xyz", "all"},
@@ -437,7 +427,6 @@ func TestParseCSV(t *testing.T) {
 }
 
 func TestProblemSorting(t *testing.T) {
-	// test that problems are sorted by frequency
 	csvData := `ID,URL,Title,Difficulty,Acceptance %,Frequency %
 1,https://leetcode.com/problems/low,"Low Frequency",Easy,55.9%,50.0%
 2,https://leetcode.com/problems/high,"High Frequency",Medium,46.4%,100.0%
@@ -452,7 +441,6 @@ func TestProblemSorting(t *testing.T) {
 		t.Fatalf("parseCSV() count = %d, want 3", len(problems))
 	}
 
-	// verify problems are sorted by frequency (descending)
 	if problems[0].Frequency != 100.0 {
 		t.Errorf("First problem frequency = %f, want 100.0", problems[0].Frequency)
 	}
