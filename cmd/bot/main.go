@@ -2,9 +2,11 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"log"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 
 	"github.com/bwmarrin/discordgo"
@@ -31,6 +33,31 @@ func main() {
 	}
 
 	fmt.Printf("Loaded data for %d companies\n", len(problemsData.GetAvailableCompanies()))
+
+	// Start a minimal HTTP health server so platforms can probe readiness/liveness.
+	go func() {
+		mux := http.NewServeMux()
+		mux.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+			w.WriteHeader(http.StatusOK)
+			_, _ = w.Write([]byte("ok"))
+		})
+		mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+			w.WriteHeader(http.StatusOK)
+			_, _ = w.Write([]byte("leetbot running"))
+		})
+
+		port := 8080
+		if p := os.Getenv("PORT"); p != "" {
+			if v, err := strconv.Atoi(p); err == nil {
+				port = v
+			}
+		}
+		addr := fmt.Sprintf(":%d", port)
+		log.Printf("Health server listening on %s", addr)
+		if err := http.ListenAndServe(addr, mux); err != nil {
+			log.Printf("health server stopped: %v", err)
+		}
+	}()
 
 	handler := discord.NewHandler(problemsData, cfg.BotPrefix)
 	dg, err := discordgo.New("Bot " + cfg.DiscordToken)
