@@ -78,7 +78,6 @@ func TestValidate(t *testing.T) {
 				t.Errorf("Validate() error = %v, wantErr %v", err, tt.wantErr)
 			}
 
-
 			if !tt.wantErr && tt.config.BotPrefix == "" {
 				if tt.config.BotPrefix != "!" {
 					t.Errorf("Validate() should set default prefix to '!', got %v", tt.config.BotPrefix)

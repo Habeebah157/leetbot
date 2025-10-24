@@ -40,7 +40,6 @@ func main() {
 
 	dg.AddHandler(handler.HandleMessage)
 
-
 	dg.AddHandler(discord.PaginatorManager.OnInteractionCreate)
 
 	dg.AddHandler(func(s *discordgo.Session, i *discordgo.InteractionCreate) {
@@ -85,4 +84,3 @@ func main() {
 
 	fmt.Println("Shutting down bot...")
 }
-

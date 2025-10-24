@@ -7,12 +7,10 @@ import (
 	"github.com/joho/godotenv"
 )
 
-
 type Config struct {
 	DiscordToken string
 	BotPrefix    string
 }
-
 
 func Load() (*Config, error) {
 
@@ -30,14 +28,12 @@ func Load() (*Config, error) {
 	return config, nil
 }
 
-
 func getEnvVar(key, defaultValue string) string {
 	if value := os.Getenv(key); value != "" {
 		return value
 	}
 	return defaultValue
 }
-
 
 func (c *Config) Validate() error {
 	if c.DiscordToken == "" {
@@ -51,4 +47,3 @@ func (c *Config) Validate() error {
 
 	return nil
 }
-
