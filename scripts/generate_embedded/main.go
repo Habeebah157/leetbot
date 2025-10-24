@@ -12,12 +12,12 @@ import (
 )
 
 type Problem struct {
-	ID          int
-	URL         string
-	Title       string
-	Difficulty  string
-	Acceptance  float64
-	Frequency   float64
+	ID         int
+	URL        string
+	Title      string
+	Difficulty string
+	Acceptance float64
+	Frequency  float64
 }
 
 func normalizeVarName(name string) string {
@@ -242,12 +242,12 @@ func parseCSVLine(line string) (Problem, error) {
 	}
 
 	return Problem{
-		ID:          id,
-		URL:         url,
-		Title:       title,
-		Difficulty:  difficulty,
-		Acceptance:  acceptance,
-		Frequency:   frequency,
+		ID:         id,
+		URL:        url,
+		Title:      title,
+		Difficulty: difficulty,
+		Acceptance: acceptance,
+		Frequency:  frequency,
 	}, nil
 }
 
